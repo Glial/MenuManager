@@ -1,0 +1,33 @@
+{
+    "name": "glial/new-project",
+    "version": "dev-master",
+    "license": "GPL-3.0",
+    "description": "Create a new project with Glial",
+    "authors": [{
+            "name": "Aurélien LEQUOY",
+            "email": "aurelien.lequoy@gmail.com",
+            "homepage": "http://www.glial-framework-php.org/",
+            "role": "Creator"
+        }
+    ],
+    "require": {
+        "php": ">=5.5",
+        "ext-gd": "*",
+        "ext-mcrypt": "*",
+        "glial/glial": "*"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "*",
+        "fabpot/php-cs-fixer": "*"
+    },
+    "scripts": {
+        "post-update-cmd": "php glial install composer",
+        "post-install-cmd": "php glial install composer"
+    },
+    "autoload": {
+        "classmap": [
+            "application/"
+        ],
+        "psr-4": {"App\\": "application/"}
+    }
+}

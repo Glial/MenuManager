@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<!--[if IE 6 ]><html lang="en-us" class="ie6"> <![endif]-->
+<!--[if IE 7 ]><html lang="en-us" class="ie7"> <![endif]-->
+<!--[if IE 8 ]><html lang="en-us" class="ie8"> <![endif]-->
+<!--[if (gt IE 7)|!(IE)]><!-->
+<html lang="en-us"><!--<![endif]-->
+<head>
+	<meta charset="utf-8">
+
+	<title>Easy Menu Manager - Documentation</title>
+	<!-- Framework CSS -->
+	<link rel="stylesheet" href="assets/prettify/prettify.css" type="text/css">
+	<link rel="stylesheet" href="assets/blueprint-css/screen.css" type="text/css" media="screen, projection">
+	<link rel="stylesheet" href="assets/blueprint-css/print.css" type="text/css" media="print">
+	<!--[if lt IE 8]><link rel="stylesheet" href="assets/blueprint-css/ie.css" type="text/css" media="screen, projection"><![endif]-->
+	<link rel="stylesheet" href="assets/blueprint-css/plugins/fancy-type/screen.css" type="text/css" media="screen, projection">
+	<script type="text/javascript" src="assets/prettify/prettify.js"></script>
+	<style type="text/css" media="screen">
+		table, hr, .box { margin-bottom:25px; }
+		.box p { margin-bottom:10px; }
+		img { max-width: 100%;  background: none repeat scroll 0 0 #FFFFFF;
+    border: 1px solid #CCCCCC;
+    box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.1);
+    max-width: 700px;
+    padding: 5px;}
+		h4 { font-weight: bold; margin: 60px 0 20px; }
+		h3 { margin: 100px 0 20px; }
+		p { margin-bottom: 20px; }
+	</style>
+</head>
+
+<body onload="prettyPrint()">
+	<div class="container">
+
+		<h3 class="center alt">Documentation</h3>
+
+		<hr>
+
+		<h1 class="center">Easy Menu Manager</h1>
+
+		<div class="borderTop">
+			<div class="span-6 colborder info prepend-1">
+				<p class="prepend-top">
+					<strong>
+					Created: 08/13/2011<br>
+					By: gawibowo<br>
+					<a href="http://codecanyon.net/user/gawibowo?ref=gawibowo">Contact Form</a>
+					</strong>
+				</p>
+			</div><!-- end div .span-6 -->
+
+			<div class="span-12 last">
+				<p class="prepend-top append-0">Thank you for purchasing my script. If you have any questions that are beyond the scope of this help file, please feel free to email via my user page contact form here:<br><a href="http://codecanyon.net/user/gawibowo?ref=gawibowo">http://codecanyon.net/user/gawibowo</a><br>Thanks so much!</p>
+			</div>
+		</div><!-- end div .borderTop -->
+
+		<hr>
+
+		<h2 id="toc" class="alt">Table of Contents</h2>
+		<ol class="alpha">
+			<li><a href="#installation">Installation</a></li>
+			<li><a href="#database_structure">Database Structure</a></li>
+			<li><a href="#directory_and_file_structure">Directory and File Structure</a></li>
+			<li><a href="#menu_manager_operations">Menu Manager Operations</a></li>
+			<li><a href="#menu_display">How To Display The Menu</a></li>
+			<li><a href="#sources_and_credits">Sources and Credits</a></li>
+		</ol>
+
+		<hr>
+
+<br>
+<br>
+			<p>Before you start the installation, please make sure that your server meets the requirements below:</p>
+<ul>
+	<li><b>PHP</b>: at least PHP 5.2<br>
+This application uses json_encode() function that was added in PHP 5.2. If you still use php 5.0.x or 5.1.x, you can use a third party script for json_encode(), for example <a href="http://www.boutell.com/scripts/jsonwrapper.html">this one</a>.
+	</li>
+	<li><b>MySQL</b>: at least MySQL 4.x</li>
+</ul>
+
+		<div id="installation">
+			<h3><strong>A) Installation</strong> - <a href="#toc">top</a></h3>
+<ol>
+	<li>
+		<h4>Upload Files</h4>
+		<p>Extract the main zip file, and then upload the <b>emm</b> directory to your server.</p>
+	</li>
+	<li>
+		<h4>Edit Configuration File</h4>
+		<p>
+			Open <b>emm/config.php</b> file and edit these values:</p>
+<pre class="prettyprint">
+// Base URL
+define(&#39;_BASE_URL&#39;, &#39;http://yoursite.com/emm/&#39;);
+</pre>
+		Change this section with your url path of this application, with trailing slash
+		<br>
+		<br>
+<pre class="prettyprint">
+// Database Connection Settings
+define(&#39;DB_HOST&#39;, &#39;localhost&#39;);
+define(&#39;DB_USER&#39;, &#39;root&#39;);
+define(&#39;DB_PASS&#39;, &#39;password&#39;);
+define(&#39;DB_NAME&#39;, &#39;easymenu&#39;);
+</pre>
+		Change this section with your database settings (host, user, password, database name).
+		<br>
+		<br>
+<pre class="prettyprint">
+// Admin Login
+define(&#39;ADMIN_USER&#39;, &#39;admin&#39;);
+define(&#39;ADMIN_PASS&#39;, &#39;mypassword&#39;);
+</pre>
+		Change this section with your username and password for accessing menu manager.<br>
+			If you want to disable login, just fill the value with an empty string.
+	</li>
+	<li>
+		<h4>Database Setup</h4>
+		<ul>
+			<li>Create a database in mysql, I suggest using phpMyAdmin.</li>
+			<li>In your phpMyAdmin, type your database name in the Create new database field, and click Create.</li>
+			<li>After database created, click on the Import link, browse the <b>sql</b> directory, select <b>easymm.sql</b> (if you want to install database + sample data) or <b>easymm-empty.sql</b> (if you want to install database without sample data).</li>
+			<li>Click Go to import the sql file.</li>
+			<li>Your database should be installed now.</li>
+		</ul>
+	</li>
+</ol>
+		</div>
+
+		<hr>
+
+		<div id="database_structure">
+			<h3><strong>B) Database Structure</strong> - <a href="#toc">top</a></h3>
+<p>
+	The database has 2 tables: menu and menu_group.</p>
+<ul>
+	<li>
+		<strong>menu</strong>: Table to store the menu items, contains 7 fields:
+		<ul>
+			<li>
+				<strong>id</strong>: the ID of the menu item, added automatically.</li>
+			<li>
+				<strong>parent_id</strong>: the &quot;parent&quot; ID of the menu item. If a menu item is in top level, the value of this field should be 0.</li>
+			<li>
+				<strong>title</strong>: the title of the menu item.</li>
+			<li>
+				<strong>url</strong>: the url of the menu item. can be full url (with http:// prefix) or relative url.</li>
+			<li>
+				<strong>class</strong>: the class attribute of the &lt;li&gt; element. With a class attribute, each menu item can be styled easily, for example if you want to add an icon beside the title.</li>
+			<li>
+				<strong>position</strong>: this field is for ordering. Menu items should be ordered based on this field.</li>
+			<li>
+				<strong>group_id</strong>: the ID of the group this item belongs to.</li>
+		</ul>
+	</li>
+	<li>
+		<strong>menu_group</strong>: Table to store the groups, contains 2 fields:
+		<ul>
+			<li>
+				<strong>id</strong>: the ID of the group, added automatically.</li>
+			<li>
+				<strong>title</strong>: the title of the group.</li>
+		</ul>
+	</li>
+</ul>
+<p>
+	If you rename the tables or fields, you must change the table and field names configuration in the config.php</p>
+<pre class="prettyprint">
+// Tables Settings
+define(&#39;MENU_TABLE&#39;, &#39;menu&#39;);
+define(&#39;MENUGROUP_TABLE&#39;, &#39;menu_group&#39;);
+
+// Fields Settings
+define(&#39;MENU_ID&#39;, &#39;id&#39;);
+define(&#39;MENU_PARENT&#39;, &#39;parent_id&#39;);
+define(&#39;MENU_TITLE&#39;, &#39;title&#39;);
+define(&#39;MENU_URL&#39;, &#39;url&#39;);
+define(&#39;MENU_CLASS&#39;, &#39;class&#39;);
+define(&#39;MENU_POSITION&#39;, &#39;position&#39;);
+define(&#39;MENU_GROUP&#39;, &#39;group_id&#39;);
+</pre>
+		</div>
+
+		<hr>
+
+		<div id="directory_and_file_structure">
+			<h3><strong>C) Directory and File Structure</strong> - <a href="#toc">top</a></h3>
+
+<ul>
+	<li><strong>documentation</strong>: contains this documentation</li>
+	<li>
+		<strong>emm</strong>: this is the main directory for the menu manager
+		<ul>
+			<li>
+				<strong>includes</strong>: for classes/libraries and functions
+				<ul>
+					<li>
+						<strong>db.php</strong>: class for database operations</li>
+					<li>
+						<strong>functions.php</strong>: for global functions</li>
+					<li>
+						<strong>tree.php</strong>: class for generating nested lists</li>
+				</ul>
+			</li>
+			<li>
+				<strong>modules</strong>: for controller files
+				<ul>
+					<li>
+						<strong>menu.php</strong>: controller for menu manager</li>
+					<li>
+						<strong>menu_group.php</strong>: controller for menu group actions</li>
+					<li>
+						<strong>user.php</strong>: controller for login and logout user</li>
+				</ul>
+			</li>
+			<li>
+				<strong>templates</strong>: for template/view files
+				<ul>
+					<li>
+						<strong>css</strong>: this directory contains 3 css files:
+						<ul>
+							<li>
+								<strong>login.css</strong>: used in login form</li>
+							<li>
+								<strong>reset.css</strong>: css reset file</li>
+							<li>
+								<strong>style.css</strong>: the main css file for the menu manager</li>
+						</ul>
+					</li>
+					<li>
+						<strong>images</strong>: directory for application images</li>
+					<li>
+						<strong>js</strong>: this directory contains javascript files used in application:
+						<ul>
+							<li>
+								<strong>jquery-1.9.1.min.js</strong>: jQuery javascript framework</li>
+							<li>
+								<strong>jquery.mjs.nestedSortable.js</strong>: jQuery nestedSortable plugin</li>
+							<li>
+								<strong>jquery-ui-1.10.3.custom.min.js</strong>: jQuery UI, required for nested sortables</li>
+							<li>
+								<strong>menu.js</strong>: main scripts for menu manager</li>
+						</ul>
+					</li>
+					<li>
+						<strong>login.php</strong>: view for login form</li>
+					<li>
+						<strong>menu.php</strong>: view for menu manager</li>
+					<li>
+						<strong>menu_edit.php</strong>: view for edit form</li>
+					<li>
+						<strong>menu_group_add.php</strong>: view for add group form</li>
+				</ul>
+			</li>
+			<li><strong>config.php</strong>: configuration file</li>
+			<li><strong>easymenu.php</strong>: this is the file included from your page to show the menu</li>
+			<li><strong>index.php</strong>: the front controller</li>
+		</ul>
+	</li>
+	<li><strong>sample</strong>: this directory contains the sample menu output
+		<ul>
+			<li><strong>menu.css</strong>: sampe css file contains styles for dropdown menu (horizontal and vertical)</li>
+			<li><strong>sample.css</strong>: base css for sample page</li>
+			<li><strong>sample.php</strong>: sample html page contains easymenu function call</li>
+		</ul>
+	</li>
+	<li><strong>sql</strong>: this directory contains sql files for installation</li>
+</ul>
+		</div>
+
+		<hr>
+
+ 		<div id="menu_manager_operations">
+			<h3><strong>D) Menu Manager Operations</strong> - <a href="#toc">top</a></h3>
+
+<p>
+	If you uploaded the <b>emm</b> directory to your public_html, you can open it with this url: <b>http://yoursite.com/emm</b> to access the menu manager.<br>
+	The menu manager contains many menu operations using ajax, so you can manage menu easily<br>
+	</p>
+	<h4>Add Menu Item</h4>
+	<img src="assets/images/add-menu.png">
+	<p>To add a menu item, go to Add Menu Item form, enter the title (required), url and class. Click Add Menu Item button, the new menu item should appear in the list.</p>
+	<h4>Reorder Menu Items</h4>
+	<img src="assets/images/sort-menu.png">
+	<p>Menu item order can be changed easily using drag-and-drop. You can also drag a menu item slightly to the right of the menu item above it to create a hierarchy (parent/child) relationship in the menu. Click Save Menu to save the changes.</p>
+	<h4>Edit Menu Item</h4>
+	<img src="assets/images/edit-menu.png">
+	<p>From the item list, click the edit icon, a modal box will appear showing edit form.<br>If the menu item is on top level, a dropdown of group will appear. If you change the group, this item (including sub items) will be moved to other group.</p>
+	<h4>Delete Menu Item</h4>
+	<img src="assets/images/delete-menu.png">
+	<p>Click the delete icon to delete a menu item. If the item has descendants (sub items), all of the descendants will also be deleted.</p>
+	<h4>Menu Group</h4>
+	<img src="assets/images/add-menu-group.png">
+	<p>In the top of item list, there is a list of groups. Click on the + link to add a group.</p>
+	<img src="assets/images/edit-menu-group.png">
+	<p>You can edit and delete the current current group from the Current Group box in the above Add Menu Item form</p>
+	<img src="assets/images/delete-menu-group.png">
+	<p>Please note, if you delete a group, all items under that group will also be deleted.<br>
+	This application needs at least 1 group, so the the first group (with ID = 1) cannot be deleted.</p>
+		</div>
+
+		<hr>
+
+		<div id="menu_display">
+			<h3><strong>E) How To Display The Menu</strong> - <a href="#toc">top</a></h3>
+
+To display the menu, you need to add this 2 lines of code in your php file:
+<pre class="prettyprint">
+include '/path/to/emm/easymenu.php';
+echo easymenu(1, 'class="horizontal"');
+</pre>
+<ul>
+	<li>First line: include the <b>emm/easymenu.php</b> file.</li>
+	<li>Second line: call the <b>easymenu()</b> function to generate the nested lists structure and display it using <b>echo</b>
+		<ul>
+			<li>The first argument (<b>1</b>) is the group ID. You can get the ID from the menu manager, in the sidebar "Current Menu".</li>
+			<li>The second argument (<b>'class="horizontal"'</b>) is the html attributes of the &lt;ul&gt; element. This is useful if you want to style the menu with a class or id attribute.</li>
+		</ul>
+	</li>
+</ul>
+
+<h4>Use existing html page</h4>
+<p>If you want to display the menu in a static html page, you can follow these steps:</p>
+<ol>
+	<li>Change your html file extension to php, for example if your file name is <b>page.html</b>, rename it to <b>page.php</b></li>
+	<li>Add this php code at the top of the page:
+<pre class="prettyprint">
+&lt;?php include 'emm/easymenu.php'; ?&gt;
+</pre>
+	Please note, if you use a relative path like this, the <b>emm</b> directory needs to be at the same level as the page.html
+	</li>
+	<li>Add the easymenu function call anywhere in the page where you want the menu to appear.
+<pre class="prettyprint">
+&lt;?php echo easymenu(1, 'class="horizontal"'); ?&gt;
+</pre>
+You can use this function multiple times in a page, if you want to display more than 1 menu.
+	</li>
+	<li>Add a link to the menu css file. You can use your own css file or use the menu.css from the download package:
+<pre class="prettyprint">
+&lt;link rel=&quot;stylesheet&quot; href=&quot;menu.css&quot;&gt;
+</pre>
+	</li>
+	<li>Your page should be something like this:
+<pre class="prettyprint">
+&lt;?php include 'emm/easymenu.php'; ?&gt;
+&lt;!DOCTYPE HTML&gt;
+&lt;html lang=&quot;en&quot;&gt;
+    &lt;head&gt;
+        ...
+        &lt;link rel=&quot;stylesheet&quot; href=&quot;menu.css&quot;&gt;
+        ...
+    &lt;/head&gt;
+    &lt;body&gt;
+        &lt;header&gt;
+            &lt;?php echo easymenu(1, 'class="horizontal"'); ?&gt;
+        &lt;/header&gt;
+        &lt;div id=&quot;content&quot;&gt;
+            This is the main content
+        &lt;/div&gt;
+        &lt;div id=&quot;sidebar&quot;&gt;
+            &lt;?php echo easymenu(2, 'class="vertical"'); ?&gt;
+        &lt;/div&gt;
+        ...
+    &lt;/body&gt;
+&lt;/html&gt;
+</pre>
+	</li>
+	<li>For more detail, please open sample.php file and check the code.</li>
+</ol>
+		</div>
+
+		<hr>
+
+		<div id="sources_and_credits">
+			<h3><strong>F) Sources and Credits</strong> - <a href="#toc">top</a></h3>
+
+	<p>I&#39;ve used the following scripts and icons:</p>
+<ul>
+	<li><b>jQuery</b><br>
+		<a href="http://jquery.com/">http://jquery.com/</a>
+	</li>
+	<li><b>jQuery UI</b><br>
+		<a href="http://jqueryui.com/">http://jqueryui.com/</a>
+	</li>
+	<li>
+		<b>nestedSortable jQuery plugin</b><br>
+		<a href="https://github.com/mjsarfatti/nestedSortable">https://github.com/mjsarfatti/nestedSortable</a><br>
+		jQuery plugins which provide a way to sort and nest elements in web applications, using drag-and-drop&nbsp;
+	</li>
+	<li>
+		<b>Fugue Icons</b><br>
+		<a href="http://p.yusukekamiyamane.com/">http://p.yusukekamiyamane.com/</a>
+	</li>
+</ul>
+		</div>
+
+		<hr>
+
+		<p>Once again, thank you so much for purchasing this script. As I said at the beginning, I'd be glad to help you if you have any questions relating to this script. No guarantees, but I'll do my best to assist.</p>
+
+		<p class="append-bottom alt large"><strong>gawibowo</strong></p>
+		<p><a href="#toc">Go To Table of Contents</a></p>
+
+		<hr class="space">
+	</div><!-- end div .container -->
+</body>
+</html>
